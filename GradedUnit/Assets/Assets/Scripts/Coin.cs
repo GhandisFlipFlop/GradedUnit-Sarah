@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour {
 
-    public Score scoreObject;
-    public int coinValue;
+    public int scoreToGive;
 
-    public AudioSource audioObject;
+    private ScoreManager theScoreManager;
+
+    private AudioSource coinSound;
+
 
     // Use this for initialization
     void Start ()
     {
-		
+        theScoreManager = FindObjectOfType<ScoreManager>();
+
+        coinSound = GameObject.Find("coin collect").GetComponent<AudioSource>();
+
 	}
 	
 	// Update is called once per frame
@@ -21,24 +26,23 @@ public class Coin : MonoBehaviour {
 		
 	}
 
-    // Unity calls this function when coin touches any other object
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the thing we touched is the player
-        Player playerScript = collision.collider.GetComponent<Player>();
-
-        // If the thing we touched has a playerscript, that means it is the player
-        if (playerScript)
+        if (other.gameObject.name == "Player")
         {
-            // We hit the player
-            // Add to the score based on our value
-            scoreObject.AddScore(coinValue);
+            theScoreManager.AddScore(scoreToGive);
+            gameObject.SetActive(false);
 
-            //PLay audio clip on collision
-            audioObject.Play();
-
-            // Destroy the gameObject that this script is attached to (the coin)
-            Destroy(gameObject);
+            if (coinSound.isPlaying)
+            {
+                coinSound.Stop();
+                coinSound.Play();
+            }
+            else
+            {
+                coinSound.Play();
+            }
+          
         }
     }
 }

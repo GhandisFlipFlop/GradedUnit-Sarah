@@ -8,11 +8,11 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
 
-    public float speed = 10;
+    public float Speed = 10;
     public float jumpSpeed = 10;
     public Rigidbody2D physicsBody;
     public string horizontalAxis = "Horizontal";
-    public string jumpButton = "jump";
+    public string jumpButton = "Jump";
 
     public Animator playerAnimator;
     public SpriteRenderer playerSprite;
@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
         direction = direction.normalized;
 
         // Calculate the velocity
-        Vector2 velocity = direction * speed;
+        Vector2 velocity = direction * Speed;
         velocity.y = physicsBody.velocity.y;
 
         // Give the velocity to the rigid body
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
 
 
         // Tell the animator our speed
-        playerAnimator.SetFloat("walkspeed", Mathf.Abs(velocity.x));
+        playerAnimator.SetFloat("Speed", Mathf.Abs(velocity.x));
 
         // Flip our sprite if we're moving backwards.
         if (velocity.x < 0)

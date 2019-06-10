@@ -12,7 +12,7 @@ public class Score : MonoBehaviour {
 
     //variable to track numerical score
 
-    private int numericalScore = 0;
+    private int numericalScore;
 
 
 
